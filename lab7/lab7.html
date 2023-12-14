@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Веб-сторінка для проекту</title>
+    <link rel="stylesheet" href="../labs_style.css"> <!-- Підключення файлу стилів -->
+</head>
+<body>
+    <div id="content-container">
+    <!-- Титульний блок -->
+    <div id="title">
+        <div id="t1">
+            <p>МІНІСТЕРСТВО ОСВІТИ І НАУКИ УКРАЇНИ</p>
+            <p>КИЇВСЬКИЙ НАЦІОНАЛЬНИЙ УНІВЕРСИТЕТ імені Тараса Шевченка</p>
+            <p>ФАКУЛЬТЕТ ІНФОРМАЦІЙНИХ ТЕХНОЛОГІЙ</p>
+        </div>
+
+        <div id="t2">
+            <p>Кафедра програмних систем і технологій</p></h2>
+            <p style="padding-top: 50px;">Дисципліна: <b>«Функціональне програмування»</b></p>
+            <p style="padding-top: 10px;">Лабораторна робота №7</p>
+            <p>на тему: <b>«Обробка рядків та файлів мовами функціонального програмування»</b></p>
+        </div>
+        <p style="padding-top: 50px;"><b>Виконав:</b> студент групи ІПЗ-44мс Євсейчик Віктор</p>
+        <p><b>Перевірила:</b> Ніколаєнко Анастасія Юріївна</p>
+        <p style="padding-top: 50px;">Київ 2023</p>
+
+    </div>
+
+    <!-- Блок мети роботи -->
+    <section>
+        <h2>Мета роботи</h2>
+        <p style="max-width: 900px;">Опанувати теоретичні основи обробки рядків та текстових файлів мовами 
+функціонального програмування та розробити програми їх реалізації</p>
+    </section>
+
+    <!-- Блок умов завдання -->
+    <section>
+        <h2>Умови завдання</h2>
+        <img src="task.png">
+    </section>
+
+    <!-- Блок коду 1 -->
+    <section>
+        <h2>Код завдання 1</h2>
+        <pre>
+            <code>
+(define (write-lines-to-file filename n) <com>;Функція для запису рядків у файл</com>
+  (with-output-to-file filename
+    (lambda ()
+      (let loop ((i 1)) 
+        (if (<= i n)
+            (begin
+              (let ((line (read))) <com>;Зчитуємо рядок з клавіатури</com>
+                (display line) <com>;Виводимо рядок у файл</com>
+                (newline))
+              (loop (+ i 1)) <com>;Рекурсивно викликаємо функцію для наступного рядка</com>
+            )
+            '())))))
+
+(define (take n lst) <com>;Функція для створення списку перших n елементів</com>
+  (if (= n 0) 
+      '()
+      (cons (car lst) (take (- n 1) (cdr lst)))))
+
+
+(display "Введіть кількість рядків:\n ")
+(define n (read))
+(define filename "output.txt")
+
+(display "Введіть рядки:\n ")
+(write-lines-to-file filename n)
+
+<com>;=============================================================</com>
+
+(define (print-file name) <com>;Функція для виведення вмісту файлу на екран</com>
+  (let ((port (open-input-file name)))
+    (print-file-helper port) <com>;Виклик допоміжної функції для обробки файлу</com>
+    (close-input-port port) <com>;Закриття файлового потоку</com>
+    'done)) <com>;Сигнал про завершення роботи</com>
+
+(define (print-file-helper port) <com>;Допоміжна функція для виведення вмісту файлу</com>
+  (let ((action (read port)))
+    (if (eof-object? action) <com>;Перевірка на кінець файлу</com>
+        'done
+        (begin
+          (display action) <com>;Виведення рядка на екран</com>
+          (newline) <com>;Виведення нового рядка на екран</com>
+          (print-file-helper port))))) <com>;Рекурсивний виклик для наступного рядка</com>
+
+(display "Вихідний файл:")
+(newline)
+(print-file "output.txt")</code>
+        </pre>
+    </section>
+
+    <!-- Блок картинки 1 -->
+    <section>
+        <h2>Результати</h2>
+        <img src="1.png">
+    </section>
+
+    <!-- Блок картинки 2 -->
+    <section>
+        <h2>Вміст файлу output.txt</h2>
+        <img src="2.png">
+    </section>
+
+    <!-- Блок висновку -->
+    <section>
+        <h2>Висновок</h2>
+        <div id="conclusion">У ході виконання завдання було розроблено програму на мові Scheme, яка записує n рядків тексту у текстовий файл. Після запису рядків у файл, було реалізовано зчитування цих рядків із файлу та їх виведення на екран.
+В процесі написання програми було використано основні можливості мови Scheme, такі як функції для роботи з файлами та операції над рядками.</div>
+    </section>
+    </div>
+</body>
+</html>
